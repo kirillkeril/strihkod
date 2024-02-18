@@ -1,23 +1,16 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  //TODO: Implement AuthController
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  final _isLogin = true.obs;
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  String get loginText => _isLogin.value ? "Вход" : "Регистрация";
+  String get alternativeText => _isLogin.value ? "Нет аккаунта?" : "Уже есть аккаунт?";
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  Future<void> auth() async {} // TODO
 
-  void increment() => count.value++;
+  Future<void> changeAuthType() async => _isLogin.value = !_isLogin.value;
 }
