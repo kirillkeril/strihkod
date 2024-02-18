@@ -1,10 +1,10 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:strihkod/app/models/product/product.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductServiceProvider extends GetxService {
-  final dbReference = 'products';
+  final db = FirebaseFirestore.instance;
 
   Future<Product?> addProduct(AddProductDto dto) async {
     String id = const Uuid().v4();
@@ -16,8 +16,7 @@ class ProductServiceProvider extends GetxService {
         controlFigure: dto.controlFigure,
         name: dto.name);
     try {
-      DatabaseReference ref = FirebaseDatabase.instance.ref(dbReference);
-      await ref.set(product);
+      await db.collection('products').add(product.toJson());
       return product;
     } catch (e) {
       print(e);
@@ -26,11 +25,13 @@ class ProductServiceProvider extends GetxService {
   }
 
   Future<bool> updateProduct(UpdateProductDto dto) async {
+    final doc = db.collection("products").doc(dto.id);
     try {
-      DatabaseReference ref =
-          FirebaseDatabase.instance.ref(dbReference + dto.id);
-      await ref.update({"name": dto.name});
-      return true;
+      bool result = await db.runTransaction((transaction) async {
+        transaction.update(doc, {"name": dto.name});
+        return true;
+      });
+      return result;
     } catch (e) {
       print(e);
       return false;
@@ -39,8 +40,7 @@ class ProductServiceProvider extends GetxService {
 
   Future<bool> deleteProduct(String id) async {
     try {
-      DatabaseReference ref = FirebaseDatabase.instance.ref(dbReference + id);
-      await ref.remove();
+      await db.collection("products").doc(id).delete();
       return true;
     } catch (e) {
       print(e);
@@ -48,18 +48,22 @@ class ProductServiceProvider extends GetxService {
     }
   }
 
-  Future<List<Product>> getAllProducts() async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref(dbReference);
-    DataSnapshot result = await ref.get();
-    if (!result.exists) return [];
-    return result.value as List<Product>;
+  Future<List<Product>?> getAllProducts() async {
+    final products = db.collection("products");
+    final List<Product> result = [];
+    products.get().then((docs) {
+      for (var s in docs.docs) {
+        result.add(s as Product);
+      }
+    });
+    return result;
   }
 
   Future<Product?> getProductById(String id) async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref(dbReference + id);
-    DataSnapshot result = await ref.get();
-    if (!result.exists) return null;
-    return result.value as Product;
+    final product = db.collection("products").doc(id);
+    return product.get().then((DocumentSnapshot doc) {
+      return doc.data() as Product;
+    });
   }
 }
 
