@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:strihkod/app/data/list_provider.dart';
 import '../../shared/enums/errors.dart';
 
 class AuthServiceDartProvider extends GetxService {
@@ -7,6 +8,8 @@ class AuthServiceDartProvider extends GetxService {
     try {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      final service = ListService();
+      service.createList(credential.user!.uid);
       return credential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

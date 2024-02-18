@@ -4,17 +4,15 @@ import 'package:strihkod/app/models/product/product.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductServiceProvider extends GetxService {
-  final db = FirebaseFirestore.instance;
+  late FirebaseFirestore db;
+
+  ProductServiceProvider() {
+    db = FirebaseFirestore.instance;
+  }
 
   Future<Product?> addProduct(AddProductDto dto) async {
     String id = const Uuid().v4();
-    Product product = Product(
-        id: id,
-        countryCode: dto.countryCode,
-        manufactureCode: dto.manufactureCode,
-        productCode: dto.productCode,
-        controlFigure: dto.controlFigure,
-        name: dto.name);
+    Product product = Product(id: id, code: dto.code, name: dto.name);
     try {
       await db.collection('products').add(product.toJson());
       return product;
@@ -53,31 +51,29 @@ class ProductServiceProvider extends GetxService {
     final List<Product> result = [];
     products.get().then((docs) {
       for (var s in docs.docs) {
-        result.add(s as Product);
+        result.add(Product.fromJson(s.data()));
       }
     });
     return result;
   }
 
   Future<Product?> getProductById(String id) async {
-    final product = db.collection("products").doc(id);
-    return product.get().then((DocumentSnapshot doc) {
-      return doc.data() as Product;
-    });
+    final product = await db.collection("products").doc(id).get();
+    return product.data() as Product;
+  }
+
+  Future<Product?> getProductByCode(String code) async {
+    final product =
+        await db.collection("products").where('code', isEqualTo: code).get();
+    return Product.fromJson(product.docs.first.data());
   }
 }
 
 class AddProductDto {
-  String countryCode;
-  String manufactureCode;
-  String productCode;
-  String controlFigure;
+  String code;
   String name;
   AddProductDto({
-    required this.countryCode,
-    required this.manufactureCode,
-    required this.productCode,
-    required this.controlFigure,
+    required this.code,
     required this.name,
   });
 }

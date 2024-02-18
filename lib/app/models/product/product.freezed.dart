@@ -21,10 +21,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Product {
   String get id => throw _privateConstructorUsedError;
-  String get countryCode => throw _privateConstructorUsedError;
-  String get manufactureCode => throw _privateConstructorUsedError;
-  String get productCode => throw _privateConstructorUsedError;
-  String get controlFigure => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,13 +34,7 @@ abstract class $ProductCopyWith<$Res> {
   factory $ProductCopyWith(Product value, $Res Function(Product) then) =
       _$ProductCopyWithImpl<$Res, Product>;
   @useResult
-  $Res call(
-      {String id,
-      String countryCode,
-      String manufactureCode,
-      String productCode,
-      String controlFigure,
-      String name});
+  $Res call({String id, String code, String name});
 }
 
 /// @nodoc
@@ -60,10 +51,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
   @override
   $Res call({
     Object? id = null,
-    Object? countryCode = null,
-    Object? manufactureCode = null,
-    Object? productCode = null,
-    Object? controlFigure = null,
+    Object? code = null,
     Object? name = null,
   }) {
     return _then(_value.copyWith(
@@ -71,21 +59,9 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      countryCode: null == countryCode
-          ? _value.countryCode
-          : countryCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      manufactureCode: null == manufactureCode
-          ? _value.manufactureCode
-          : manufactureCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      productCode: null == productCode
-          ? _value.productCode
-          : productCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      controlFigure: null == controlFigure
-          ? _value.controlFigure
-          : controlFigure // ignore: cast_nullable_to_non_nullable
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -102,13 +78,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       __$$ProductImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String countryCode,
-      String manufactureCode,
-      String productCode,
-      String controlFigure,
-      String name});
+  $Res call({String id, String code, String name});
 }
 
 /// @nodoc
@@ -123,10 +93,7 @@ class __$$ProductImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? countryCode = null,
-    Object? manufactureCode = null,
-    Object? productCode = null,
-    Object? controlFigure = null,
+    Object? code = null,
     Object? name = null,
   }) {
     return _then(_$ProductImpl(
@@ -134,21 +101,9 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      countryCode: null == countryCode
-          ? _value.countryCode
-          : countryCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      manufactureCode: null == manufactureCode
-          ? _value.manufactureCode
-          : manufactureCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      productCode: null == productCode
-          ? _value.productCode
-          : productCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      controlFigure: null == controlFigure
-          ? _value.controlFigure
-          : controlFigure // ignore: cast_nullable_to_non_nullable
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -162,12 +117,7 @@ class __$$ProductImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProductImpl implements _Product {
   const _$ProductImpl(
-      {required this.id,
-      required this.countryCode,
-      required this.manufactureCode,
-      required this.productCode,
-      required this.controlFigure,
-      required this.name});
+      {required this.id, required this.code, required this.name});
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductImplFromJson(json);
@@ -175,19 +125,13 @@ class _$ProductImpl implements _Product {
   @override
   final String id;
   @override
-  final String countryCode;
-  @override
-  final String manufactureCode;
-  @override
-  final String productCode;
-  @override
-  final String controlFigure;
+  final String code;
   @override
   final String name;
 
   @override
   String toString() {
-    return 'Product(id: $id, countryCode: $countryCode, manufactureCode: $manufactureCode, productCode: $productCode, controlFigure: $controlFigure, name: $name)';
+    return 'Product(id: $id, code: $code, name: $name)';
   }
 
   @override
@@ -196,21 +140,13 @@ class _$ProductImpl implements _Product {
         (other.runtimeType == runtimeType &&
             other is _$ProductImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.countryCode, countryCode) ||
-                other.countryCode == countryCode) &&
-            (identical(other.manufactureCode, manufactureCode) ||
-                other.manufactureCode == manufactureCode) &&
-            (identical(other.productCode, productCode) ||
-                other.productCode == productCode) &&
-            (identical(other.controlFigure, controlFigure) ||
-                other.controlFigure == controlFigure) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, countryCode, manufactureCode,
-      productCode, controlFigure, name);
+  int get hashCode => Object.hash(runtimeType, id, code, name);
 
   @JsonKey(ignore: true)
   @override
@@ -229,10 +165,7 @@ class _$ProductImpl implements _Product {
 abstract class _Product implements Product {
   const factory _Product(
       {required final String id,
-      required final String countryCode,
-      required final String manufactureCode,
-      required final String productCode,
-      required final String controlFigure,
+      required final String code,
       required final String name}) = _$ProductImpl;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
@@ -240,13 +173,7 @@ abstract class _Product implements Product {
   @override
   String get id;
   @override
-  String get countryCode;
-  @override
-  String get manufactureCode;
-  @override
-  String get productCode;
-  @override
-  String get controlFigure;
+  String get code;
   @override
   String get name;
   @override

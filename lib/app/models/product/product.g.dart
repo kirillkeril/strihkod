@@ -9,19 +9,13 @@ part of 'product.dart';
 _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
     _$ProductImpl(
       id: json['id'] as String,
-      countryCode: json['countryCode'] as String,
-      manufactureCode: json['manufactureCode'] as String,
-      productCode: json['productCode'] as String,
-      controlFigure: json['controlFigure'] as String,
+      code: json['code'] as String,
       name: json['name'] as String,
     );
 
 Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'countryCode': instance.countryCode,
-      'manufactureCode': instance.manufactureCode,
-      'productCode': instance.productCode,
-      'controlFigure': instance.controlFigure,
+      'code': instance.code,
       'name': instance.name,
     };

@@ -7,10 +7,7 @@ part 'product.g.dart';
 class Product with _$Product {
   const factory Product({
     required String id,
-    required String countryCode,
-    required String manufactureCode,
-    required String productCode,
-    required String controlFigure,
+    required String code,
     required String name,
   }) = _Product;
 

@@ -1,11 +1,16 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:strihkod/app/models/product/product.dart';
 
-class UsersList {
-  List<String> userIds;
-  List<Product> products;
+part 'list.freezed.dart';
+part 'list.g.dart';
 
-  UsersList({
-    required this.userIds,
-    required this.products,
-  });
+@freezed
+class UsersList with _$UsersList {
+  factory UsersList({
+    required String userId,
+    required List<Product> products,
+  }) = _UsersList;
+
+  factory UsersList.fromJson(Map<String, dynamic> json) =>
+      _$UsersListFromJson(json);
 }
