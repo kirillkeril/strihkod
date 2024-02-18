@@ -23,7 +23,7 @@ class AuthServiceDartProvider extends GetxService {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       return credential.user;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       return AuthError.wrongPassword;
     }
   }
