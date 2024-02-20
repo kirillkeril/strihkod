@@ -2,6 +2,7 @@ enum AuthError {
   weakPassword,
   userAlreadyExists,
   wrongPassword,
+  noDataProvided,
 }
 
 extension AuthErrorMessagesExtenson on AuthError {
@@ -13,6 +14,8 @@ extension AuthErrorMessagesExtenson on AuthError {
         return "Пользователь уже существует.";
       case AuthError.wrongPassword:
         return "Неверный пароль.";
+      case AuthError.noDataProvided:
+        return "Не введён логин/пароль.";
       default:
         return "Неизвестная ошибка";
     }
