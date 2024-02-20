@@ -14,7 +14,7 @@ class AuthController extends GetxController {
       _isLogin.value ? "Нет аккаунта?" : "Уже есть аккаунт?";
 
   Future<void> auth() async {
-    if (_isLogin == true) {
+    if (_isLogin.value == true) {
       var res = await service.signIn(emailController.text, passController.text);
       print(res);
     } else {
