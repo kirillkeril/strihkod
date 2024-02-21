@@ -4,8 +4,6 @@ import 'package:strihkod/app/data/auth_service_dart_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../routes/app_pages.dart';
 
-import '../../../routes/app_pages.dart';
-
 class AuthController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();

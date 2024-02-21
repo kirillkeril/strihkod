@@ -42,7 +42,7 @@ class HomeView extends GetView<HomeController> {
               width: Get.width * 0.7,
               height: Get.height * 0.05,
               child: TextButton(
-                onPressed: () => Get.toNamed(Routes.ADD),
+                onPressed: () => controller.add,
                 child: const Text(
                   "Добавить штрих код",
                   style:  TextStyle(fontSize: 16),
