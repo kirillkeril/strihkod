@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:strihkod/app/data/auth_service_dart_provider.dart';
 
+import '../../../routes/app_pages.dart';
+
 class AuthController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -21,6 +23,7 @@ class AuthController extends GetxController {
       var res = await service.signUp(emailController.text, passController.text);
       print(res);
     }
+    Get.toNamed(Routes.BARCODE_SCANNER);
   } // TODO
 
   Future<void> changeAuthType() async => _isLogin.value = !_isLogin.value;
