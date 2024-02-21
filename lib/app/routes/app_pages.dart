@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:strihkod/app/modules/baarcode/bindings/barcode_binding.dart';
+import 'package:strihkod/app/modules/baarcode/views/barcode_view.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/auth_view.dart';
@@ -22,6 +24,11 @@ class AppPages {
       name: _Paths.AUTH,
       page: () => const AuthView(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.BARCODE_SCANNER,
+      page: () => const BarcodeView(),
+      binding: BarcodeBinding(),
     ),
   ];
 }
