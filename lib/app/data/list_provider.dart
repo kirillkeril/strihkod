@@ -13,10 +13,10 @@ class ListService extends GetxService {
     productService = ProductServiceProvider();
   }
 
-  Future<UsersList?> get(String userId) async {
+  Future<List<Product>?> get(String userId) async {
     final list = await db.collection("list").doc(userId).get();
     if (list.data() == null) return null;
-    return UsersList.fromJson(list.data()!);
+    return UsersList.fromJson(list.data()!).products;
   }
 
   addProductToList(String userId, String code) async {
@@ -31,20 +31,21 @@ class ListService extends GetxService {
     list.products.add(product);
 
     listDoc.update(list.toJson());
-    return list;
+    return list.products;
   }
 
   removeFromList(String userId, String code) async {
     final list = await get(userId);
     if (list == null) return null;
     List<Product> filteredProducts = [];
-    for (var p in list.products) {
+    for (var p in list) {
       if(p.code == code) {
         filteredProducts.add(p);
       }
     }
     var newList = UsersList(userId: userId, products: filteredProducts);
     await db.collection('list').doc(userId).set(newList.toJson());
+    return newList.products;
   }
 
   createList(String userId) async {
