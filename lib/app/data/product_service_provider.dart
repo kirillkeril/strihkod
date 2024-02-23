@@ -38,7 +38,10 @@ class ProductServiceProvider extends GetxService {
 
   Future<bool> deleteProduct(String id) async {
     try {
-      await db.collection("products").doc(id).delete();
+      var docToDelete  = await db.collection("products").where('id', isEqualTo: id).get();
+      for( var v in docToDelete.docs) {
+        db.collection('products').doc(v.id).delete();
+      }
       return true;
     } catch (e) {
       print(e);
@@ -49,11 +52,12 @@ class ProductServiceProvider extends GetxService {
   Future<List<Product>?> getAllProducts() async {
     final products = db.collection("products");
     final List<Product> result = [];
-    products.get().then((docs) {
-      for (var s in docs.docs) {
-        result.add(Product.fromJson(s.data()));
-      }
-    });
+    var l = await products.get();
+    for (var s in l.docs) {
+      var product = Product.fromJson(s.data());
+      print(product);
+      result.add(product);
+    }
     return result;
   }
 
