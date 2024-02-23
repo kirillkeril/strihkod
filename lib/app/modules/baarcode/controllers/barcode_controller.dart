@@ -6,8 +6,7 @@ class BarcodeController extends GetxController {
 
   final count = 0.obs;
 
-  Future<void> processBarcode() async {
-    final InputImage image = InputImage.fromFilePath('/assets/barcode.jpg');
+  Future<void> processBarcode(InputImage image) async {
     final List<Barcode> barcodes = await barcodeScanner.processImage(image);
 
     for (Barcode barcode in barcodes) {
