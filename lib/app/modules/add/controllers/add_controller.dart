@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:strihkod/app/data/product_service_provider.dart';
-import 'package:strihkod/app/routes/app_pages.dart';
 
 class AddController extends GetxController {
-  //TODO: Implement AddController
+  final _service = Get.find<ProductServiceProvider>();
 
-  // final codeController = TextEditingController();
-  // TextEditingController nameController = TextEditingController();
-  // final service = ProductServiceProvider();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
-  // AddProductDto dto = AddProductDto(code: codeController.text, name: nameController.text);
-  // Future <void> add () async {
-  //   var res = await service.addProduct(codeController.text nameController.text);
+  late final String _barCode;
 
-  //   }
-  // }
+  String get barCode => _barCode;
+
+  @override
+  void onInit() {
+    _barCode = Get.arguments;
+    super.onInit();
+  }
+
+  Future<void> add() async {
+    AddProductDto dto = AddProductDto(code: _barCode, name: nameController.text);
+    var res = await _service.addProduct(dto);
+    Get.back();
+  }
 }
