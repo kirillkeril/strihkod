@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:strihkod/app/routes/app_pages.dart';
-
 import 'package:strihkod/shared/colors.dart';
+
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -11,45 +10,61 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(height: Get.height * 0.05),
-              _buildButtons(),
-              SizedBox(height: Get.height * 0.025),
-            ],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildLogo(),
+          _buildList(),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => controller.add(),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Container _buildLogo() {
+    return Container(
+      height: Get.height * 0.15,
+      width: Get.width,
+      decoration: BoxDecoration(
+        color: LightColors.bgColor,
+        borderRadius: const BorderRadius.only(
+          bottomRight: Radius.circular(60),
+        ),
+      ),
+      child: Center(
+        child: Text(
+          "Список продуктов",
+          style: TextStyle(
+            fontSize: 34,
+            color: LightColors.whiteColor,
           ),
         ),
       ),
     );
   }
-}
 
-  Container _buildButtons() {
+  Container _buildList() {
     return Container(
-      padding: const EdgeInsets.all(16),
-      width: Get.width * 0.8,
+      height: Get.height * 0.80,
+      width: Get.width,
       decoration: BoxDecoration(
-        color: LightColors.whiteColor,
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: Get.width * 0.7,
-              height: Get.height * 0.05,
-              child: TextButton(
-                onPressed: () => controller.add,
-                child: const Text(
-                  "Добавить штрих код",
-                  style:  TextStyle(fontSize: 16),
-                ),
-              ),
-            ),
-          ],
+        color: LightColors.productsColor,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(60),
         ),
+      ),
+      child: Center(
+        child: Obx(() => Text(
+              controller.products.length.toString(),
+              style: TextStyle(
+                fontSize: 34,
+                color: LightColors.whiteColor,
+              ),
+            )),
+      ),
     );
   }
+}
