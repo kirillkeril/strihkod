@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:get/get.dart';
 import 'package:strihkod/shared/colors.dart';
@@ -31,7 +32,7 @@ class HomeView extends GetView<HomeController> {
       decoration: BoxDecoration(
         color: LightColors.bgColor,
         borderRadius: const BorderRadius.only(
-          bottomRight: Radius.circular(60),
+          bottomRight: Radius.circular(20),
         ),
       ),
       child: Center(
@@ -53,18 +54,55 @@ class HomeView extends GetView<HomeController> {
       decoration: BoxDecoration(
         color: LightColors.productsColor,
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(60),
+          topLeft: Radius.circular(20),
         ),
       ),
-      child: Center(
-        child: Obx(() => Text(
-              controller.products.length.toString(),
-              style: TextStyle(
-                fontSize: 34,
-                color: LightColors.whiteColor,
+      child: Obx(() => Center(
+            child: controller.products.isEmpty
+                ? Text(
+                    "А ничего и нет(",
+                    style: TextStyle(
+                      color: LightColors.whiteColor,
+                      fontSize: 28,
+                    ),
+                  )
+                : _buildProductList(),
+          )),
+    );
+  }
+
+  ListView _buildProductList() {
+    return ListView.builder(
+      itemCount: controller.products.length,
+      itemBuilder: (BuildContext context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          child: Slidable(
+            key: Key(controller.products[index].id),
+            endActionPane: ActionPane(
+              extentRatio: 0.25,
+              motion: const BehindMotion(),
+              children: [
+                SlidableAction(
+                  onPressed: (BuildContext context) => controller.delete(controller.products[index].code, index),
+                  backgroundColor: LightColors.redColor,
+                  foregroundColor: LightColors.whiteColor,
+                  icon: Icons.delete,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ],
+            ),
+            child: Card(
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                leading: const Icon(Icons.photo_size_select_small_rounded),
+                title: Text(controller.products[index].name),
+                subtitle: Text(controller.products[index].code),
               ),
-            )),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

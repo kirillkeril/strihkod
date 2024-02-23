@@ -16,10 +16,11 @@ class ListService extends GetxService {
   Future<List<Product>?> get(String userId) async {
     final list = await db.collection("list").doc(userId).get();
     if (list.data() == null) return null;
+    print(list.data());
     return UsersList.fromJson(list.data()!).products;
   }
 
-  addProductToList(String userId, String code) async {
+  Future<List<Product>?> addProductToList(String userId, String code) async {
     final listDoc = db.collection("list").doc(userId);
     var listData = await listDoc.get();
     if (listData.data() == null) return null;
@@ -28,24 +29,28 @@ class ListService extends GetxService {
 
     Product? product = await productService.getProductByCode(code);
     if (product == null) return null;
-    list.products.add(product);
+    var newList = [...list.products.map((e) => e.toJson()), product.toJson()];
 
-    listDoc.update(list.toJson());
+    await listDoc.update({
+      "products": newList,
+    });
     return list.products;
   }
 
   removeFromList(String userId, String code) async {
     final list = await get(userId);
     if (list == null) return null;
-    List<Product> filteredProducts = [];
+    List filteredProducts = [];
     for (var p in list) {
-      if(p.code == code) {
-        filteredProducts.add(p);
+      if (p.code != code) {
+        filteredProducts.add(p.toJson());
       }
     }
-    var newList = UsersList(userId: userId, products: filteredProducts);
-    await db.collection('list').doc(userId).set(newList.toJson());
-    return newList.products;
+    await db.collection('list').doc(userId).set({
+      "userId": userId,
+      "products": filteredProducts,
+    });
+    return filteredProducts;
   }
 
   createList(String userId) async {

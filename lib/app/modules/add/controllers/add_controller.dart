@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:strihkod/app/data/product_service_provider.dart';
+import 'package:strihkod/app/models/product/product.dart';
 
 class AddController extends GetxController {
   final _service = Get.find<ProductServiceProvider>();
@@ -20,7 +21,7 @@ class AddController extends GetxController {
 
   Future<void> add() async {
     AddProductDto dto = AddProductDto(code: _barCode, name: nameController.text);
-    var res = await _service.addProduct(dto);
+    await _service.addProduct(dto);
     Get.back();
   }
 }

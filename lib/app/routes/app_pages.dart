@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:get/get.dart';
 import '../modules/add/bindings/add_binding.dart';
 import '../modules/add/views/add_view.dart';
