@@ -29,7 +29,7 @@ class ListService extends GetxService {
 
     Product? product = await productService.getProductByCode(code);
     if (product == null) return null;
-    var newList = [...list.products.map((e) => e.toJson()), product.toJson()];
+    var newList = [...list.products.toList().map((e) => e.toJson()), product.toJson()];
 
     await listDoc.update({
       "products": newList,
