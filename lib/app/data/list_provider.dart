@@ -28,7 +28,7 @@ class ListService extends GetxService {
 
     Product? product = await productService.getProductByCode(code);
     if (product == null) return null;
-    list.products.add(product);
+    list.products.toList().add(product);
 
     listDoc.update(list.toJson());
     return list.products;
