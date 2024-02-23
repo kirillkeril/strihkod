@@ -34,6 +34,19 @@ class ListService extends GetxService {
     return list;
   }
 
+  removeFromList(String userId, String code) async {
+    final list = await get(userId);
+    if (list == null) return null;
+    List<Product> filteredProducts = [];
+    for (var p in list.products) {
+      if(p.code == code) {
+        filteredProducts.add(p);
+      }
+    }
+    var newList = UsersList(userId: userId, products: filteredProducts);
+    await db.collection('list').doc(userId).set(newList.toJson());
+  }
+
   createList(String userId) async {
     UsersList list = UsersList(userId: userId, products: []);
     await db.collection('list').doc(userId).set(list.toJson());
